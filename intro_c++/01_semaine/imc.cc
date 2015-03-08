@@ -29,8 +29,8 @@ public:
     }
 
     double imc(){
-	if(taille != 0){
-	    return poids / (taille * taille);
+	if(taille_ != 0){
+	    return poids_ / (taille_ * taille_);
 	}else{
 	    return 0;
 	}
