@@ -23,6 +23,10 @@ public:
 
     }
 
+    Cellule division(Cellule autre){
+	
+
+    }
     
 
 public:
