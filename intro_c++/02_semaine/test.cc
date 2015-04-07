@@ -11,7 +11,7 @@ class Cellule
    *****************************************************/
 public:
     // We define the constructor
-    Cellule(string nom="Pyrobacculum", double taille=10.0, int energie=5, string couleur="vert")
+    Cellule(string nom="Pyrobacculum", double taille=10.0, int energie=5, string couleur="verte")
 	: nom(nom), taille(taille), energie(energie), couleur(couleur)
     {}
 
@@ -25,10 +25,43 @@ public:
 
     Cellule division(Cellule autre){
 	
+	string new_couleur;
+	string old_couleur = autre.couleur;
+	Cellule nouvelle;
+	
+	
+	// Here we chose the new color based on the old one
+	if (old_couleur == "verte"){
+	    new_couleur = "bleue";
+	    }
 
+	if (old_couleur == "bleue"){
+	    new_couleur = "rouge";
+	    }
+
+
+	if (old_couleur == "rouge"){
+	    new_couleur = "rose bonbon";
+	    }
+
+	if (old_couleur == "violet"){
+	    new_couleur = "verte";
+	    }
+	
+	// If any option above was sattisfied
+	if(new_couleur == ""){
+	    new_couleur = old_couleur + " fluo";
+
+	}
+
+
+
+	cout << "Dividing celle" << endl;
+	cout << "The old color: " << old_couleur << endl;
+	cout << "The new color: " << new_couleur << endl;
+	return autre;
     }
     
-
 public:
     string nom;
     double taille;
@@ -43,14 +76,20 @@ public:
 
 int main()
 {
-  Cellule assiette;
-  cout << assiette.taille << endl;
-  cout << assiette.nom << endl;
-  cout << assiette.energie << endl;
-  cout << assiette.couleur << endl;
+    string couleur;
+    string nom;
+    double taille;
+    int energy;
+    Cellule assiette(nom="test", taille=5, energy=2, couleur="violet");
+    cout << assiette.taille << endl;
+    cout << assiette.nom << endl;
+    cout << assiette.energie << endl;
+    cout << assiette.couleur << endl;
 
-  cout << "---------------" << endl;
-  assiette.affiche();
+    cout << "---------------" << endl;
+    assiette.affiche();
+    cout << "----------------" << endl;
+    assiette.division(assiette);
       
 
   return 0;
