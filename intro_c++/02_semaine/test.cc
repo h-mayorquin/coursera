@@ -62,7 +62,7 @@ public:
 	return autre;
     }
     
-public:
+private:
     string nom;
     double taille;
     int energie;
@@ -80,11 +80,7 @@ int main()
     string nom;
     double taille;
     int energy;
-    Cellule assiette(nom="test", taille=5, energy=2, couleur="violet");
-    cout << assiette.taille << endl;
-    cout << assiette.nom << endl;
-    cout << assiette.energie << endl;
-    cout << assiette.couleur << endl;
+    Cellule assiette(nom="test", taille=5, energy=2, couleur="stuff");
 
     cout << "---------------" << endl;
     assiette.affiche();
