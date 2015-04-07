@@ -62,6 +62,8 @@ public:
 	nouvelle.couleur = new_couleur;
 	
 	return nouvelle;
+
+	
     }
     
 private:
@@ -95,6 +97,10 @@ public:
     // Method Evoluer 
     void evolue(){
 	Cellule new_cell;
+	int energy; 
+	vector<int> to_eliminate;
+	int N_eli; 
+
 	int N_initial = population.size();
 	int i;
 
@@ -107,8 +113,25 @@ public:
 	int N_final = population.size();
 	cout << "Initial population " << N_initial << endl;
 	cout << "Final population " << N_final << endl;
-	
 
+	// Now we get rid of the ones without energy
+	
+	// First we get the indexes of those who are 0 
+	for(i=0; i < N_final; ++i){
+	    energy = population[i].energie;
+	    if (energy == 0){
+		to_eliminate.push_back(i);
+	    }
+	}
+	
+	// Now we eliminate them 
+	N_eli = to_eliminate.size();
+	for(i=0; i < N_eli ; ++i){
+	    cout << to_eliminate[i] << endl;
+	    swap(population[to_eliminate[i]], population.back());
+	    population.pop_back();
+	}
+	
     }
 private:    
     vector<Cellule> population;
@@ -130,8 +153,8 @@ int main()
 
   assiette.evolue();
   assiette.affiche(); // Get rid of this
-  //  cout << "Population après évolution :" << endl;
-  //  assiette.affiche();
+  cout << "Population après évolution :" << endl;
+  assiette.affiche();
 
   return 0;
 }
