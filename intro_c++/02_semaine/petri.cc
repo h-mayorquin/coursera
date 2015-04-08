@@ -9,11 +9,28 @@ class Cellule
   /*****************************************************
    * Compléter le code à partir d'ici
    *****************************************************/
+
+private:
+    string nom;
+    double taille;
+    int energie;
+    string couleur;
+
 public:
     // We define the constructor
     Cellule(string nom="Pyrobacculum", double taille=10.0, int energie=5, string couleur="verte")
 	: nom(nom), taille(taille), energie(energie), couleur(couleur)
     {}
+
+    // Setters and Getters 
+    int get_energie() const { return energie; }
+    string get_couleur() const{ return couleur; }
+    
+    void set_energie(int e) { energie = e; }
+    void set_couleur(string c) { couleur = c; }
+    void set_nom(string n) { nom = n; }
+    void set_taille(double t) { taille = t; }
+    
 
     void affiche(){
 	cout << nom;
@@ -23,16 +40,20 @@ public:
 
     }
 
-    Cellule division(Cellule autre){
+    Cellule division(){
 	
 	string new_couleur;
-	string old_couleur = autre.couleur;
-	Cellule nouvelle = autre;
+	string old_couleur = couleur;
+	Cellule nouvelle;
 
+	// Set the values of the new cell
+	nouvelle.set_energie(energie);
+	nouvelle.set_couleur(couleur);
+	nouvelle.set_nom(nom);
+	nouvelle.set_taille(taille);
+ 
 	// Reduce the energy of the old cell
-	this -> energie = autre.energie - 1;
-	
-	
+	energie = energie - 1;
 	
 	// Here we chose the new color based on the old one
 	if (old_couleur == "verte"){
@@ -51,7 +72,7 @@ public:
 	if (old_couleur == "violet"){
 	    new_couleur = "verte";
 	    }
-	
+
 	// If any option above was sattisfied
 	if(new_couleur == ""){
 	    new_couleur = old_couleur + " fluo";
@@ -59,21 +80,16 @@ public:
 	}
 
 	// Modify te color
-	nouvelle.couleur = new_couleur;
+	nouvelle.set_couleur(new_couleur);
+
 	
 	return nouvelle;
 
 	
     }
     
-private:
-    string nom;
-    double taille;
-    int energie;
-    string couleur;
 
 };
-
 
 class Petri
 {
@@ -82,6 +98,7 @@ public:
     void ajouter(Cellule cellule){
 	population.push_back(cellule);
     }
+
     // Method Afficher
     void affiche(){
 	int N_size = population.size();
@@ -106,19 +123,18 @@ public:
 
 	// First we divide the new cells
 	for(i=0; i < N_initial; ++i){
-	    new_cell = population[i].division(population[i]);
+	    new_cell = population[i].division();
 	    population.push_back(new_cell);			    
 	}
-
+	
+	// Population after division 
 	int N_final = population.size();
-	cout << "Initial population " << N_initial << endl;
-	cout << "Final population " << N_final << endl;
 
 	// Now we get rid of the ones without energy
 	
 	// First we get the indexes of those who are 0 
 	for(i=0; i < N_final; ++i){
-	    energy = population[i].energie;
+	    energy = population[i].get_energie();
 	    if (energy == 0){
 		to_eliminate.push_back(i);
 	    }
@@ -127,12 +143,13 @@ public:
 	// Now we eliminate them 
 	N_eli = to_eliminate.size();
 	for(i=0; i < N_eli ; ++i){
-	    cout << to_eliminate[i] << endl;
+	    // cout << to_eliminate[i] << endl;
 	    swap(population[to_eliminate[i]], population.back());
 	    population.pop_back();
 	}
 	
     }
+
 private:    
     vector<Cellule> population;
 
@@ -152,7 +169,6 @@ int main()
   assiette.affiche();
 
   assiette.evolue();
-  assiette.affiche(); // Get rid of this
   cout << "Population après évolution :" << endl;
   assiette.affiche();
 
