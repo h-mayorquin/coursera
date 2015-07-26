@@ -150,7 +150,6 @@ vector<int> merge(vector<int> &vec, vector<int> &left, vector<int> &right, long 
 }
 
 
-
 vector<int> merge_sort(vector<int> &vec, long &inv_number){
     // Termination condition: List is completely sorted if it
     // only contains a single element.
