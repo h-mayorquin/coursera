@@ -25,15 +25,25 @@ void print_node(int node_number, vector<vector<int> > graph){
       
 }
 
-void select_edge(int *node_u, int *node_v, vector<vector<int> > graph){
+void select_edge(int *node_u, int *node_v, vector<vector<int> > &graph){
 
     // First select a node
-    (*node_u) = rand() % graph.size();
-    vector<int> aux_vector = graph[(*node_u)];
+    cout << "Select edge graph size" << graph.size() << endl;
+
+    (*node_u) = rand() % graph.size()  + 1;
+    vector<int> aux_vector = graph[(*node_u) - 1];
 
     // Then select and edge
+    print_node((*node_u), graph);
+
     int index_v = rand() % aux_vector.size();
+    
+    cout << "Index " << index_v << endl;
+    cout << "node v size" << aux_vector.size() << endl;
+
     (*node_v) = aux_vector[index_v];
+
+    cout << "node v" << (*node_v) << endl;
 
 }
 
@@ -43,10 +53,9 @@ void merge(int node_u, int node_v, vector<vector<int> > &graph){
     vector<int>::iterator vector_iterator; 
     vector<int>::iterator vector_iterator2; 
     int x; 
+
     for(vector_iterator=graph[node_v - 1].begin(); vector_iterator!=graph[node_v - 1].end(); ++vector_iterator){
-	// cout << "----------------------" << endl;
 	x = (*vector_iterator);  // This is the node that node_v points to
-	// First we print the vector
 	// Now we need to change the contents of the vector x
 	for(vector_iterator2=graph[x - 1].begin(); vector_iterator2!=graph[x - 1].end(); ++vector_iterator2){
 	    if ((*vector_iterator2)== node_v){
@@ -54,7 +63,27 @@ void merge(int node_u, int node_v, vector<vector<int> > &graph){
 	    }
 	}
     }
+    
+}
 
+
+void erase_node_v(int node_v, vector<vector<int> > &graph){
+    
+    for(int i=0; i<graph.size(); ++i){
+	if(i == (node_v - 1)){
+	    graph.erase(graph.begin() + i);
+	}
+    }
+}
+
+// Now we need to erase the self loops
+void erase_self_loop(int node_u, vector<vector<int> > &graph){
+    for(int i=0; i<graph[node_u - 1].size(); ++i){
+	if(graph[node_u - 1][i]  == node_u){
+	    graph[node_u - 1].erase(graph[node_u - 1].begin() + i);
+	}
+    }
+    
 }
 
 
@@ -104,44 +133,35 @@ int main()
     
   }
   
-  
-  // First we select a node
+
   int node_u, node_v; 
-  select_edge(&node_u, &node_v, graph);
 
-  cout << "outside u is " << node_u << endl;
-  cout << "outside v is " << node_v << endl;
+  while(graph.size() > 2){
+      cout << "graph size " << graph.size() << endl;
 
-  // First let's print node_v
-  print_node(node_v, graph);
-  // Then we merge the nodes u and v
-  merge(node_u, node_v, graph);
+      // First we select a node
+      select_edge(&node_u, &node_v, graph);
 
-  // No we need to erase the node_v
-  vector<int>::iterator vector_iterator; 
+      cout << "outside u is " << node_u << endl;
+      cout << "outside v is " << node_v << endl;
 
-  cout << "Size " << graph.size() << endl;
+      // Then we merge the nodes u and v
+      merge(node_u, node_v, graph);
+      cout << "merged" << endl;
 
-  print_node(node_v - 1, graph);
-  print_node(node_v, graph);
-  print_node(node_v + 1, graph);
+      // No we erase the self loops
+      erase_self_loop(node_u, graph);
+      cout << "self loop erased" << endl;
 
-  cout << "node _ v" << node_v << endl;
-
-
-  for(int i=0; i<graph.size(); ++i){
-      if(i == (node_v - 1)){
-	  graph.erase(graph.begin() + i);
-      }
+      // No we need to erase the node_v
+      erase_node_v(node_v, graph);
+      cout << "node erased" << endl;
+  
+      cout << "print node u for errors" << endl;
+      print_node(node_u, graph);
+      // Jump the line to visualize
+      cout << endl;
   }
-
-  //  print_node(node_v, graph);
-  cout << "Size " << graph.size() << endl;
-
-  print_node(node_v - 1, graph);
-  print_node(node_v, graph);
-  print_node(node_v + 1, graph);
-
   return 0; 
 
 }
