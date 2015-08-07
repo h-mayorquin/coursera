@@ -60,29 +60,21 @@ typedef string CourseId;
 /*******************************************
  * Complétez le programme à partir d'ici.
  *******************************************/
-class Activity
-{
-private:
-    string lieu_;
-    double durée_; // En heures 
-    Time horaire_;
 
-public:
-    Activity(string lieu, Day jour , double heure, double durée)
-	: lieu_(lieu), durée_(durée), horaire_(jour, heure)
-    {}
 
-    // Here the setters and getters go
-    string getLocation() const { return lieu_; }
-    double getTime() const { return horaire_; }
-    double getDuration() const { return durée_; }
+    cout << ", durée ";
 
-    bool conflicts(Activity activity){
-	
-	activity.
-    }
 
-};
+    cout << ". crédits : ";
+
+
+      cout << "Aucun cours n'est compatible avec la sélection de cours." << endl;
+
+
+    cout << "Total de crédits   : ";
+    cout << "Charge journalière : ";
+    cout << "Suggestions :" << endl;
+
 
 /*******************************************
  * Ne rien modifier après cette ligne.
