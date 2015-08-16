@@ -1,5 +1,5 @@
 import networkx as nx
-import matplolib.pyplot as plt
+import matplotlib.pyplot as plt
 
 filename = 'SCC.txt'
 DG = nx.DiGraph()
